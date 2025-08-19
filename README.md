@@ -1,10 +1,10 @@
-# Self-Driving Lab based on ACRO System and Integra AutoPipette
+# Self-Driving Lab based on ACRO System and Integra Pipette
 
 <p align="center">
   <img width="400" alt="liquibot" src="/Images/liquibot.png" />
 </p>
 
-This project provides a graphical user interface (GUI) for automating enzyme assay experiments using a custom-designed liquid handler based on the ACRO system and Integra autopipette, as well as a SpectraMax plate reader. It enables users to design, dispense, and analyze experimental formulations with minimal manual intervention.
+This project provides a graphical user interface (GUI) for automating enzyme assay experiments using a custom-designed liquid handler based on the ACRO system and Integra pipette, as well as a SpectraMax plate reader. It enables users to design, dispense, and analyze experimental formulations with minimal manual intervention.
 
 ## Features
 
@@ -44,12 +44,12 @@ src/
 - Basic tools and comfort with mechanical assembly
 - SpectraMax M2 plate reader and SDK (Optional)
 - Chemyx Syringe Pump SDK
-- Integra AutoPipette and a computer with Bluetooth capability
+- Integra Pipette and a computer with Bluetooth capability
 
 ---
 ## Hardware Setup
 
-For hardware assembly and configuration, please refer to the [AutoPipette Liquid Handler.pdf](../AutoPipette%20Liquid%20Handler%20Building%20Guide.pdf) found under the AutoPipette Liquid Handler directory. This guide provides step-by-step instructions for building and setting up the AutoPipette liquid handler.
+For hardware assembly and configuration, please refer to the [Pipette Liquid Handler.pdf](../Pipette%20Liquid%20Handler%20Building%20Guide.pdf) found under the Pipette Liquid Handler directory. This guide provides step-by-step instructions for building and setting up the pipette liquid handler.
 <p align="center">
 <img width="400" alt="Picture9" src="/Images/liquibot%20cad.png" />
 </p>
@@ -60,7 +60,7 @@ For hardware assembly and configuration, please refer to the [AutoPipette Liquid
 
 ```sh
 git clone <repo-url>
-cd AutoPipette Liquid Handler/AutoPipette SDL Software
+cd Pipette Liquid Handler/Pipette SDL Software
 pip install -r requirements.txt
 ```
 
