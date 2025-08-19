@@ -59,7 +59,7 @@ For hardware assembly and configuration, please refer to the [Pipette Liquid Han
 ### Installation
 
 ```sh
-git clone <repo-url>
+git clone <https://github.com/GormleyLab/Pipette-Liquid-Handler>
 cd Pipette Liquid Handler/Pipette SDL Software
 pip install -r requirements.txt
 ```
