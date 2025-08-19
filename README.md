@@ -49,7 +49,7 @@ src/
 ---
 ## Hardware Setup
 
-For hardware assembly and configuration, please refer to the [Pipette Liquid Handler.pdf](../Pipette%20Liquid%20Handler%20Building%20Guide.pdf) found under the Pipette Liquid Handler directory. This guide provides step-by-step instructions for building and setting up the pipette liquid handler.
+For hardware assembly and configuration, please refer to the [Pipette Liquid Handler.pdf](/Pipette%20Liquid%20Handler%20Building%20Guide.pdf) found under the Pipette Liquid Handler directory. This guide provides step-by-step instructions for building and setting up the pipette liquid handler.
 <p align="center">
 <img width="400" alt="Picture9" src="/Images/liquibot%20cad.png" />
 </p>
@@ -71,7 +71,7 @@ python main.py
 ```
 
 ## Usage
-There is no SOP for this software yet, but it is based on the original Pen Plotter Liquid Handler design. The Pen Plotter SDL SOP can be found [here](https://github.com/Pasta1107/Users-Guide-to-SDL/blob/main/Pen%20Plotter%20Liquid%20Handler/SDL_SOP.pdf).
+There is no SOP for this software yet, but it is based on the original Pen Plotter Liquid Handler design. The Pen Plotter SDL SOP can be found [here](https://github.com/GormleyLab/SDLGuide/blob/main/Pen%20Plotter%20Liquid%20Handler/SDL_SOP.pdf).
 - **Home Tab:** Input reagent names, concentrations, pH, and group assignments. Import custom CSVs if needed.
 - **Enzyme Assay Tab:** Configure experiment parameters, bounds, and desired activity. Start automated DBTL (Design-Build-Test-Learn) cycles.
 
