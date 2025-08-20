@@ -61,6 +61,10 @@ For hardware assembly and configuration, please refer to the [Pipette Liquid Han
 ```sh
 git clone <https://github.com/GormleyLab/Pipette-Liquid-Handler>
 cd Pipette Liquid Handler/Pipette SDL Software
+```
+
+Then you should create a virtual environment, and run:
+```
 pip install -r requirements.txt
 ```
 
