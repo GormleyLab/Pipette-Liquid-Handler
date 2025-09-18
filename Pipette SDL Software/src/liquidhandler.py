@@ -3,7 +3,7 @@ import pandas as pd
 import time
 from datetime import datetime
 import pyvisa
-import SDLVariables as var
+import src.sdlvariables as var
 import clr
 import sys, os
 
@@ -33,7 +33,7 @@ y = 0
 z = 0
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-tip_positions_path = os.path.join(BASE_DIR, '..', 'resources', 'Tip Positions.csv.csv')
+tip_positions_path = os.path.join(BASE_DIR, '..', 'resources', 'Tip Positions.csv')
 
 tip_positions = pd.read_csv(tip_positions_path, index_col='name')
 
@@ -47,7 +47,7 @@ def initialize_chemyx():
     global chemyx
     global rm
     rm = pyvisa.ResourceManager()
-    chemyx = rm.open_resource('ASRL7::INSTR') #, timeout = 25000, write_termination = '\r\n', readtermination = '\r\n', baud_rate =19200, data_bits =8)
+    chemyx = rm.open_resource('ASRL8::INSTR') #, timeout = 25000, write_termination = '\r\n', readtermination = '\r\n', baud_rate =19200, data_bits =8)
 
 def chemyx_command(command):
     global chemyx

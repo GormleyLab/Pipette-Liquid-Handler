@@ -6,6 +6,7 @@ seaborn
 shap
 scikit-learn
 pyDOE
-pyvisa
+pyvisa-py
+pyserial
 ttkthemes
 pythonnet

@@ -299,14 +299,16 @@ run_button.pack(pady=20, padx=20)
 #----------------------------- Manual Tab Layout -------------------------------
 # Generate the manual tab for manual control of the axidraw. Syringe pump control has not been added
 # because it can easily be controlled using the interface on the device
-def create_manual_layout(parent, speed_pendown, speed_penup, penposup, penposdown):
+def create_manual_layout(parent):
     global x_entry
     global y_entry
-    ttk.Button(parent, text='Pen Up', style='Custom.TButton',command=lambda: lh.penup()).grid(row=1, column=0, padx=2, pady=2)
-    ttk.Button(parent, text='Pen Down', style='Custom.TButton',command=lambda: lh.pendown()).grid(row=2, column=0, padx=2, pady=2)
+    global z_entry
+    ttk.Button(parent, text='Pen Up', style='Custom.TButton').grid(row=1, column=0, padx=2, pady=2)
+    ttk.Button(parent, text='Pen Down', style='Custom.TButton').grid(row=2, column=0, padx=2, pady=2)
     
     ttk.Label(parent, text='X-Position', style='Custom.TLabel').grid(row=3, column=0, padx=2, pady=2)
     ttk.Label(parent, text='Y-Position', style='Custom.TLabel').grid(row=3, column=1, padx=2, pady=2)
+    ttk.Label(parent, text='Z-Position', style='Custom.TLabel').grid(row=3, column=2, padx=2, pady=2)
 
     x_entry = ttk.Entry(parent, style='Custom.TEntry', width=5)
     x_entry.insert(1,0)
@@ -316,55 +318,66 @@ def create_manual_layout(parent, speed_pendown, speed_penup, penposup, penposdow
     y_entry.insert(1,0)
     y_entry.grid(row=4, column=1, padx=4, pady=4, ipadx=8, ipady=6)
     y_entry.config(font=('Franklin', 24))
-    ttk.Button(parent, text='Move', style='Custom.TButton',command=lambda: move_axidraw()).grid(row=4, column=2, padx=2, pady=2)
+    z_entry = ttk.Entry(parent, style='Custom.TEntry', width=5)
+    z_entry.insert(1,0)
+    z_entry.grid(row=4, column=2, padx=4, pady=4, ipadx=8, ipady=6)
+    z_entry.config(font=('Franklin', 24))
+
+    ttk.Button(parent, text='Move', style='Custom.TButton',command=lambda: move()).grid(row=4, column=3, padx=2, pady=2)
     
-    ttk.Label(parent, text='Pen Lower Speed (0-110)', style='Custom.TLabel').grid(row=5, column=0, columnspan=2, padx=2, pady=2)
-    entry = ttk.Entry(parent, style='Custom.TEntry', width=5)
-    entry.insert(0, str(speed_pendown))
-    entry.grid(row=5, column=2, padx=4, pady=4, ipadx=8, ipady=6)
-    entry.config(font=('Franklin', 24))
-    ttk.Label(parent, text='Pen Raise Speed (0-110)', style='Custom.TLabel').grid(row=6, column=0, columnspan=2, padx=2, pady=2)
-    entry = ttk.Entry(parent, style='Custom.TEntry', width=5)
-    entry.insert(0, str(speed_penup))
-    entry.grid(row=6, column=2, padx=4, pady=4, ipadx=8, ipady=6)
-    entry.config(font=('Franklin', 24))
-    ttk.Label(parent, text='Pen Upper Limit (0-100)', style='Custom.TLabel').grid(row=7, column=0, columnspan=2, padx=2, pady=2)
-    entry = ttk.Entry(parent, style='Custom.TEntry', width=5)
-    entry.insert(0, str(penposup))
-    entry.grid(row=7, column=2, padx=4, pady=4, ipadx=8, ipady=6)
-    entry.config(font=('Franklin', 24))
-    ttk.Label(parent, text='Pen Lower Limit (0-100)', style='Custom.TLabel').grid(row=8, column=0, columnspan=2, padx=2, pady=2)
-    entry = ttk.Entry(parent, style='Custom.TEntry', width=5)
-    entry.insert(0, str(penposdown))
-    entry.grid(row=8, column=2, padx=4, pady=4, ipadx=8, ipady=6)
-    entry.config(font=('Franklin', 24))
-   
     ttk.Button(parent, text='Update Settings', style='Custom.TButton').grid(row=9, column=0, columnspan=3, padx=2, pady=2)
     
     ttk.Button(parent, text='Open Drawer', style='Custom.TButton',command=lambda: dp.spectramax_opendrawer()).grid(row=10, column=0, padx=2, pady=2)
     ttk.Button(parent, text='Close Drawer', style='Custom.TButton',command=lambda: dp.spectramax_closedrawer()).grid(row=10, column=1, padx=2, pady=2)
+    ttk.Button(parent, text='Tip Pickup', style='Custom.TButton',command=lambda: lh.tip_pickup()).grid(row=11, column=0, padx=2, pady=2)
+    ttk.Button(parent, text='Tip Discard', style='Custom.TButton',command=lambda: lh.tip_discard()).grid(row=11, column=1, padx=2, pady=2)
 
 def on_key_press(event):
-    # Check which key was pressed and handle accordingly
-    key = event.keysym
-    move_by = 10 if event.state & 0x0001 else 1  # Check if Shift key is held (state bit 0x0001)
+    key = event.keysym.lower()
+    shift_held = (event.state & 0x1) != 0
+    ctrl_held = (event.state & 0x4) != 0
 
-    if key == 'Left':
+    # Determine step size
+    if ctrl_held:
+        move_by = 0.1
+    elif shift_held:
+        move_by = 10
+    else:
+        move_by = 1
+
+    if key == 'left':
         lh.ad_left(move_by)
         x_entry.delete(0, 'end')
-        x_entry.insert(1, lh.x)
-    elif key == 'Right':
+        x_entry.insert(0, lh.x)
+    elif key == 'right':
         lh.ad_right(move_by)
         x_entry.delete(0, 'end')
-        x_entry.insert(1, lh.x)
-    elif key == 'Up':
+        x_entry.insert(0, lh.x)
+    elif key == 'up':  # Forward
+        lh.ad_forward(move_by)
+        y_entry.delete(0, 'end')
+        y_entry.insert(0, lh.y)
+    elif key == 'down':  # Backward
+        lh.ad_backward(move_by)
+        y_entry.delete(0, 'end')
+        y_entry.insert(0, lh.y)
+    elif key == 'e':  # Z up
         lh.ad_up(move_by)
-        y_entry.delete(1, 'end')
-        y_entry.insert(1, lh.y)
-    elif key == 'Down':
+        z_entry.delete(0, 'end')
+        z_entry.insert(0, lh.z)
+    elif key == 'd':  # Z down
         lh.ad_down(move_by)
-        y_entry.delete(1, 'end')
-        y_entry.insert(1, lh.y)
+        z_entry.delete(0, 'end')
+        z_entry.insert(0, lh.z)
+    elif key == 'E':  # Z up
+        lh.ad_up(move_by)
+        z_entry.delete(0, 'end')
+        z_entry.insert(0, lh.z)
+    elif key == 'D':  # Z down
+        lh.ad_down(move_by)
+        z_entry.delete(0, 'end')
+        z_entry.insert(0, lh.z)
+    
 
 def check_focus(event):
     # Check if the "Manual" tab is selected
@@ -375,30 +388,33 @@ def check_focus(event):
         root.bind('<Right>', on_key_press)
         root.bind('<Up>', on_key_press)
         root.bind('<Down>', on_key_press)
+        root.bind('<Key-e>', on_key_press)
+        root.bind('<Key-d>', on_key_press)
+        root.bind('<Key-E>', on_key_press)
+        root.bind('<Key-D>', on_key_press)
     else:
         # Unbind arrow keys
         root.unbind('<Left>')
         root.unbind('<Right>')
         root.unbind('<Up>')
         root.unbind('<Down>')
+        root.unbind('<Key-e>')
+        root.unbind('<Key-d>')
+        root.unbind('<Key-E>')
+        root.unbind('<Key-D>')
 
-def move_axidraw():
+def move():
     # Retrieve the values from the coordinate entry fields
-    x_val = int(x_entry.get())
-    y_val = int(y_entry.get())
+    x_val = round(float(x_entry.get()),2)
+    y_val = round(float(y_entry.get()),2)
+    z_val = round(float(z_entry.get()),2)
 
-    # Ensure coordinates are within AxiDraw bounds, otherwise it will crash
-    if 190 >= x_val >= 0 and 140 >= y_val >= 0:
-        print(x_val)
-        print(y_val)
-        # Call the AxiDraw move function with these coordinates
-        lh.ad_move(x_val, y_val)
+    lh.ad_move(x_val, y_val,z_val)
+    lh.x = x_val
+    lh.y = y_val
+    lh.z = z_val
 
-        # Update x and y values on LH module to keep track of position
-        lh.x = x_val
-        lh.y = y_val
-
-create_manual_layout(manual_tab, lh.speed_pendown, lh.speed_penup, lh.penposup, lh.penposdown)
+create_manual_layout(manual_tab)
 tabControl.bind('<<NotebookTabChanged>>', check_focus)
 
 def ask_to_continue_with_dataframe(df):
@@ -480,7 +496,7 @@ def ask_to_continue_with_dataframe(df):
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
         # Perform any cleanup actions here, if needed
-        #lh.ad_move(0,0)  
+        lh.quit_program()  
         root.destroy() # Close the window
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
