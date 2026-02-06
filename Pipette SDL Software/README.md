@@ -19,20 +19,19 @@ This project provides a graphical user interface (GUI) for automating enzyme ass
 ## Directory Structure
 
 ```
-main.py
-README.md
-requirements.txt
-data/
-    GOx Assay data_bank.csv
-resources/
-    gl_logo.ico
-    Tip Positions.csv
-src/
-    dataprocessing.py
-    guifunctions.py
-    liquidhandler.py
-    sdlgui.py
-    sdlvariables.py
+├── data/
+│   └── GOx Assay data_bank.csv  # Validation dataset example
+├── src/
+│   ├── sdlgui.py         # Main GUI layout and logic
+│   ├── guifunctions.py   # Experiment setup, seed library, dispensing
+│   ├── liquidhandler.py  # AxiDraw and syringe pump control
+│   ├── dataprocessing.py # Data extraction, ML/AL integration
+│   └── sdlvariables.py   # Global variables and experiment state
+├── resources/            # Icons and assets
+├── resources/            # Icons and assets
+├── main.py               # Entry point (runs the GUI)
+├── requirements.txt
+└── README.md
 ```
 
 ## Getting Started
@@ -93,4 +92,5 @@ MIT License
 Apostolos Maroulis, Dylan Waynor<br>
 <img width="300" src="/Images/gllogo.png">
 
-Last Updated ***
+Last Updated 01/29/2026
+Version 1.0.0
