@@ -14,22 +14,6 @@ This project provides a graphical user interface (GUI) for automating enzyme ass
 - Automated data collection and analysis
 - Machine learning-driven experiment optimization (Gaussian Process, Expected Improvement)
 - CSV import/export for formulations and results
-- Potential integration with SpectraMax plate reader# Self-Driving Lab based on ACRO System and Integra Pipette
-
-<p align="center">
-  <img width="400" alt="liquibot" src="/Images/liquibot.png" />
-</p>
-
-This project provides a graphical user interface (GUI) for automating enzyme assay experiments using a custom-designed liquid handler based on the ACRO system and Integra pipette, as well as a SpectraMax plate reader. It enables users to design, dispense, and analyze experimental formulations with minimal manual intervention.
-
-## Features
-
-- GUI for experiment setup and control
-- Automated liquid handling via OpenBuilds ACRO system
-- Seed library generation using Latin Hypercube Sampling
-- Automated data collection and analysis
-- Machine learning-driven experiment optimization (Gaussian Process, Expected Improvement)
-- CSV import/export for formulations and results
 - Potential integration with SpectraMax plate reader
 
 ## Directory Structure
